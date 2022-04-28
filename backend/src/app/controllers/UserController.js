@@ -42,7 +42,7 @@ class UserController {
     const user = await User.findByPk(id)
 
     if (!user) {
-      return res.status(400).json({ message: "id not found."})
+      return res.status(400).json({ message: "id not found." })
     }
 
     return res.status(200).json({
@@ -56,6 +56,34 @@ class UserController {
       city: user.city,
       state: user.state,
     })
+  }
+
+  async update(req, res) {
+    const { id } = req.params;
+
+    const user = await User.findByPk(id)
+
+    if (!user) {
+      return res.status(400).json({ message: "id not found." })
+    }
+
+    const update = await user.update(req.body)
+
+    return res.status(200).json({
+      id: update.id,
+      name: update.name,
+      cpf: update.cpf,
+      birth_date: update.birth_date,
+      email: update.email,
+      phone: update.phone,
+      address: update.address,
+      city: update.city,
+      state: update.state,
+    })
+  }
+
+  async delete(req, res) {
+
   }
 }
 

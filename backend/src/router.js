@@ -4,5 +4,7 @@ const routes = new Router();
 
 routes.post('/users', UserController.register);
 routes.get('/users/:id', UserController.read);
+routes.put('/users/:id', UserController.update);
+routes.delete('/users/:id', UserController.delete);
 
 export default routes;
