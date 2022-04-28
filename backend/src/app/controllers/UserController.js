@@ -82,8 +82,21 @@ class UserController {
     })
   }
 
-  async delete(req, res) {
+  async delete(req, res, next) {
+    const { id } = req.params
+    const user = await User.findByPk(id)
 
+    if (!user) {
+      return res.status(400).json({ message: "id not found." })
+    }
+
+    await user.destroy({
+      where: {
+        id: id,
+      }
+    })
+
+    return res.status(200).json({ message: "successfully deleted."})
   }
 }
 
