@@ -1,4 +1,10 @@
 {
+  "name": "example-app",
+  "description": "a really cool app",
+  "version": "1.0.0",
+  "engines": {
+    "yarn": "1.22.17"
+  },
   "scripts": {
     "start": "src/server.js",
     "dev": "nodemon src/server.js"
