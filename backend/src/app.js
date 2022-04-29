@@ -1,7 +1,7 @@
 import express from 'express';
+import cors from 'cors';
 import routes from './router';
-
-import './database'
+import './database';
 
 class App {
   constructor() {
@@ -17,6 +17,10 @@ class App {
 
   routes() {
     this.server.use(routes);
+  }
+
+  cors() {
+    this.server.use(cors());
   }
 }
 
