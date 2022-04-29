@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "start": "src/server.js",
     "dev": "nodemon src/server.js"
   },
   "devDependencies": {
