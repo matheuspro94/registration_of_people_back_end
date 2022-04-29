@@ -91,6 +91,16 @@ class UserController {
   }
 
   async update(req, res) {
+    const {
+      name,
+      cpf,
+      birth_date,
+      email,
+      phone,
+      address,
+      city,
+      state
+    } = req.body
     const regexCpf = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/
 
     const schema = yup.object().shape({
@@ -128,7 +138,19 @@ class UserController {
       return res.status(400).json({ message: "id not found." })
     }
 
-    const update = await user.update(req.body)
+    const update = await user.update(
+      {
+        name,
+        cpf,
+        birth_date,
+        email,
+        phone,
+        address,
+        city,
+        state
+      },
+      {where: { id }}
+    )
 
     return res.status(200).json({
       id: update.id,
