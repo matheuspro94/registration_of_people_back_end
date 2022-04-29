@@ -1,10 +1,42 @@
 import User from "../models/User"
+import * as yup from 'yup';
+
 
 class UserController {
   async register(req, res) {
+
+    const regexCpf = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/
+
+    const schema = yup.object().shape({
+      name: yup.string()
+      .min(3)
+      .max(30)
+      .required(),
+      cpf: yup.string()
+      .matches(regexCpf)
+      .required(),
+      birth_date: yup.string()
+      .required(),
+      email: yup.string()
+      .email()
+      .required(),
+      phone: yup.string()
+      .required(),
+      address: yup.string()
+      .required(),
+      city: yup.string()
+      .required(),
+      state:yup.string()
+      .required(),
+    })
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails'})
+    }
+
     const userExists = await User.findOne({
       where: {
-        email: req.body.email,
+        cpf: req.body.cpf,
       }
     })
 
@@ -59,6 +91,35 @@ class UserController {
   }
 
   async update(req, res) {
+    const regexCpf = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/
+
+    const schema = yup.object().shape({
+      name: yup.string()
+      .min(3)
+      .max(30)
+      .required(),
+      cpf: yup.string()
+      .matches(regexCpf)
+      .required(),
+      birth_date: yup.string()
+      .required(),
+      email: yup.string()
+      .email()
+      .required(),
+      phone: yup.string()
+      .required(),
+      address: yup.string()
+      .required(),
+      city: yup.string()
+      .required(),
+      state:yup.string()
+      .required(),
+    })
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails'})
+    }
+
     const { id } = req.params;
 
     const user = await User.findByPk(id)
@@ -82,7 +143,7 @@ class UserController {
     })
   }
 
-  async delete(req, res, next) {
+  async delete(req, res) {
     const { id } = req.params
     const user = await User.findByPk(id)
 
@@ -97,6 +158,11 @@ class UserController {
     })
 
     return res.status(200).json({ message: "successfully deleted."})
+  }
+
+  async listAllUsers(req, res) {
+    const listAll = await User.findAll()
+    return res.status(200).json(listAll)
   }
 }
 

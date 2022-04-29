@@ -6,5 +6,6 @@ routes.post('/users', UserController.register);
 routes.get('/users/:id', UserController.read);
 routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.delete);
+routes.get('/users', UserController.listAllUsers);
 
 export default routes;

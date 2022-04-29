@@ -16,8 +16,10 @@
     "sucrase": "^3.21.0"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "express": "^4.17.3",
     "pg": "^8.7.3",
-    "pg-hstore": "^2.3.4"
+    "pg-hstore": "^2.3.4",
+    "yup": "^0.32.11"
   }
 }
