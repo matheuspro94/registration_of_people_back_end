@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import UserController from './app/controllers/UserController';
+const { Router } = require('express');
+const UserController = require('./Api/controllers/UserController');
 const routes = new Router();
 
 routes.post('/users', UserController.register);
@@ -8,4 +8,4 @@ routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.delete);
 routes.get('/users', UserController.listAllUsers);
 
-export default routes;
+module.exports = routes;

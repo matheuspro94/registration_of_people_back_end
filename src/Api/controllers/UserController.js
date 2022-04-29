@@ -1,5 +1,5 @@
-import User from "../models/User"
-import * as yup from 'yup';
+const User = require("../models/User");
+const yup = require('yup');
 
 
 class UserController {
@@ -188,4 +188,4 @@ class UserController {
   }
 }
 
-export default new UserController;
+module.exports = new UserController;
