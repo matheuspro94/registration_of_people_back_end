@@ -109,6 +109,34 @@ O <code>ID</code> deve ser válido e o usuário existir. O <code>ID</code> do it
 }
 ```
 
+#### BUACANDO CIDADE PELO UF
+
+A atualização deve ser feita por uma requisição do tipo <strong>GET</strong> para o endpoint <code>/cities/:uf</code>, Exemplo:
+
+```json
+{
+	"cities": [
+		"Abreu e Lima",
+		"Afogados da Ingazeira",
+		"Afrânio",
+		"Agrestina",
+		"Água Preta",
+		"Águas Belas",
+		"Alagoinha",
+		"Aliança",
+		"Altinho",
+		"Amaraji",
+		"Angelim",
+		"Araçoiaba",
+		"Araripina",
+		"Arcoverde",
+		"Barra de Guabiraba",
+		"Barreiros",
+		...
+	]
+}
+```
+
 #### REMOVENDO USUÁRIO
 
 Aplicação permite somente remoção de um usuário por requisição, deve informar um <code>ID</code> válido de um usuário que existe

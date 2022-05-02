@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const yup = require('yup');
-
+const axios = require('axios');
 
 class UserController {
   async register(req, res) {
@@ -9,29 +9,29 @@ class UserController {
 
     const schema = yup.object().shape({
       name: yup.string()
-      .min(3)
-      .max(30)
-      .required(),
+        .min(3)
+        .max(30)
+        .required(),
       cpf: yup.string()
-      .matches(regexCpf)
-      .required(),
+        .matches(regexCpf)
+        .required(),
       birth_date: yup.string()
-      .required(),
+        .required(),
       email: yup.string()
-      .email()
-      .required(),
+        .email()
+        .required(),
       phone: yup.string()
-      .required(),
+        .required(),
       address: yup.string()
-      .required(),
+        .required(),
       city: yup.string()
-      .required(),
-      state:yup.string()
-      .required(),
+        .required(),
+      state: yup.string()
+        .required(),
     })
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails'})
+      return res.status(400).json({ error: 'Validation fails' })
     }
 
     const userExists = await User.findOne({
@@ -105,29 +105,29 @@ class UserController {
 
     const schema = yup.object().shape({
       name: yup.string()
-      .min(3)
-      .max(30)
-      .required(),
+        .min(3)
+        .max(30)
+        .required(),
       cpf: yup.string()
-      .matches(regexCpf)
-      .required(),
+        .matches(regexCpf)
+        .required(),
       birth_date: yup.string()
-      .required(),
+        .required(),
       email: yup.string()
-      .email()
-      .required(),
+        .email()
+        .required(),
       phone: yup.string()
-      .required(),
+        .required(),
       address: yup.string()
-      .required(),
+        .required(),
       city: yup.string()
-      .required(),
-      state:yup.string()
-      .required(),
+        .required(),
+      state: yup.string()
+        .required(),
     })
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails'})
+      return res.status(400).json({ error: 'Validation fails' })
     }
 
     const { id } = req.params;
@@ -149,7 +149,7 @@ class UserController {
         city,
         state
       },
-      {where: { id }}
+      { where: { id } }
     )
 
     return res.status(200).json({
@@ -179,12 +179,34 @@ class UserController {
       }
     })
 
-    return res.status(200).json({ message: "successfully deleted."})
+    return res.status(200).json({ message: "successfully deleted." })
   }
 
   async listAllUsers(req, res) {
     const listAll = await User.findAll()
     return res.status(200).json(listAll)
+  }
+
+  async getCidades(req, res) {
+    const UF = req.params.uf;
+
+    const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${UF.toUpperCase()}/municipios`;
+    const cities = [];
+
+    var options = {
+      method: 'GET',
+      url,
+    };
+
+    await axios.request(options).then(function (response) {
+      response.data.forEach(element => {
+        cities.push(element.nome);
+      });
+    }).catch(function (error) {
+      console.error(error);
+    });
+
+        return res.status(200).json({ cities: cities });
   }
 }
 
